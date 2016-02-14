@@ -29,21 +29,25 @@ switch ($_GET['action']) {
     echo json_encode($mp4_paths);
     break;
 
+
   case 'upload_and_convert':
+    ini_set('upload_max_filesize', '50M');
+    if ($_FILES['file']['error'] > 0) {
+       $filevar = print_r($_FILES, true);
+       error_log("Upload files: $filevar\n", 3, "error.log");
+    }
+
     if (!empty($_FILES)) {
-    
+
       $tempFile = $_FILES['file']['tmp_name'];
-      error_log("Tempfile: $tempFile\n", 3, "error.log");
       $fileName = pathinfo($_FILES['file']['name']);
       $targetFile =  DL_PATH . $fileName['filename']. ".m4a" ;
-      error_log("Target file: $targetFile\n", 3, "error.log");
 
       # Convert file to mp4 using ffmpeg
-      $output = shell_exec("ffmpeg -i $tempFile -c:a libfdk_aac $targetFile");
-      error_log($output, 4, "error.log");       
+      shell_exec("ffmpeg -i $tempFile -loglevel quiet -c:a libfdk_aac $targetFile");
     }
     break;
-    
+        
   case 'download_files':
     $folder = "downloads_" . date("Ymd-Hi");
     
