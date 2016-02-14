@@ -11,7 +11,7 @@ app.controller("downloadsController", function($scope, $http, $interval) {
          });
     };
     
-//    $interval( function() { $scope.updateFileList(); }, 5000);
+    $interval( function() { $scope.updateFileList(); }, 5000);
     
     $scope.clearFiles = function(e) {
       $scope.toDownload = [];
