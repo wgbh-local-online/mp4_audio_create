@@ -3,6 +3,10 @@
 define('DL_FOLDER', 'downloads');
 define('DL_PATH', dirname( __FILE__ ) . DIRECTORY_SEPARATOR. DL_FOLDER . DIRECTORY_SEPARATOR);
   
+if (!file_exists(DL_PATH)) {
+  exec("mkdir -p " . DL_PATH)
+} 
+     
 function downloadable_files($f) {
   return preg_match("/\.(m4a|mp4)$/", $f);
 }
@@ -27,7 +31,7 @@ switch ($_GET['action']) {
 
   case 'upload_and_convert':
     if (!empty($_FILES)) {
-     
+    
       $tempFile = $_FILES['file']['tmp_name'];
       $fileName = pathinfo($_FILES['file']['name']);
       $targetFile =  DL_PATH . $fileName['filename']. ".m4a" ;
