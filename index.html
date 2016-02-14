@@ -6,7 +6,15 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
   <script src="checklist-model.js"></script>
   <script src="./mp4download.js"></script>
-  <script src="./dropzone.js"></script>
+  <script src="dropzone.js"></script>
+  <script type="text/javascript">
+    window.onload = function() {
+      var myDropzone = Dropzone.instances[0];
+      myDropzone.on('complete', function(file) {
+        myDropzone.removeFile(file);
+      });
+    };
+  </script>
   <link href="./dropzone.css" rel="stylesheet" />
   <link href="./style.css" rel="stylesheet" />
   
@@ -15,7 +23,7 @@
   <div class="content">
     <h1>mp3 to mp4 converter</h1>
     <p>Files dropped into the box below will be converted HE-ACC in an MPEG-4 container (extension m4a).</p>
-    <form action="upload_convert.php"
+    <form action="do_it.php?action=upload_and_convert"
         class="dropzone"
         id="audio-dropzone">
       <div class="fallback">
@@ -23,19 +31,19 @@
       </div>  
     </form>
     <h2>Download</h2>
-    <div ng-controller="downloadsController as downloads" data-ng-init="updateFileList()">
-      <form ng-submit="download()">
+    <div ng-controller="downloadsController as downloads" data-ng-init="updateFileList(true)">
+      <form action="do_it.php?action=download_files" method="post" target="hidden_iframe" enctype="application/x-www-form-urlencoded">
         <label ng-repeat="item in availableFiles">
-          <input type="checkbox" checklist-model="toDownload" checklist-value="item.filename" /> {{item.filename}}
+          <input type="checkbox" name="files[]" value="{{item.filename}}" /> {{item.filename}}
         </label>
-        <button ng-click="checkAll()">Check all</button>
-        <button ng-click="checkNone()">Clear</button>
         <input type="submit" class="download" value="Download" />
       </form>
-      <div style="padding: 20px; border: solid 1px gray;margin: 20px 0;">
-        <p class="status" ng-bind="status"></p>
+      <button ng-click="clearFiles()" class="alert">Clear Files</button>
+      <div class="status">
+        <p>Status: <span ng-bind="status"></span></p>
       </div>
     </div>
   </div><!-- content -->
+  <iframe width="1" height="1" frameBorder="0" name="hidden_iframe" class="hidden"></iframe>
 </body>
 </html>

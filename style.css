@@ -27,12 +27,19 @@ button, input[type=submit] {
 input[type=submit].download {
   background-color: darkorange;
 }
+button.alert {
+  background-color: #c00;
+  color: #eee;
+}
 button:hover, input[type=submit]:hover {
   background-color: orange;
   cursor: pointer;
 }
 .status {
-  color: red;
+  padding: 20px;
+  margin: 20px 0; 
+  border: solid 1px #eee; 
+  color: darkgray;
   font-weight: bold;
 }
   
