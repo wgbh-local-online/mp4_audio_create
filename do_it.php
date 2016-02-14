@@ -8,7 +8,7 @@ if (!is_dir(DL_PATH)) {
 } 
      
 function downloadable_files($f) {
-  return preg_match("/\.(m4a|mp4)$/", $f);
+  return preg_match("/\.(m4a|mp4|mp3)$/", $f);
 }
 
 function add_folder($f) {
@@ -33,11 +33,14 @@ switch ($_GET['action']) {
     if (!empty($_FILES)) {
     
       $tempFile = $_FILES['file']['tmp_name'];
+      error_log("Tempfile: $tempFile\n", 3, "error.log");
       $fileName = pathinfo($_FILES['file']['name']);
       $targetFile =  DL_PATH . $fileName['filename']. ".m4a" ;
+      error_log("Target file: $targetFile\n", 3, "error.log");
 
       # Convert file to mp4 using ffmpeg
-      exec("ffmpeg -i $tempFile -c:a libfdk_aac $targetFile");       
+      $output = shell_exec("ffmpeg -i $tempFile -c:a libfdk_aac $targetFile");
+      error_log($output, 4, "error.log");       
     }
     break;
     
