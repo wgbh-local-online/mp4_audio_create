@@ -31,5 +31,9 @@ button:hover, input[type=submit]:hover {
   background-color: orange;
   cursor: pointer;
 }
+.status {
+  color: red;
+  font-weight: bold;
+}
   
   

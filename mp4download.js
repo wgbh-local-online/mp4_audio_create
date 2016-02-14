@@ -11,14 +11,18 @@ app.controller("downloadsController", function($scope, $http, $interval) {
         });
     };
     
-//     $interval( function() { $scope.updateFileList(); }, 5000);
+    $interval( function() { $scope.updateFileList(); }, 5000);
 
-    $scope.checkAll = function() {
+    $scope.checkAll = function(e) {
+      e.preventDefault();
       $scope.toDownload = $scope.availableFiles.map(function(item) item.filepath);
+      $scope.status = "All files selected.";
     };
 
-    $scope.checkNone = function() {
+    $scope.checkNone = function(e) {
+      e.preventDefault();
       $scope.toDownload = [];
+      $scope.status = "Files to download cleared.";
     };
     
     $scope.download = function() {
@@ -28,7 +32,11 @@ app.controller("downloadsController", function($scope, $http, $interval) {
         params: {
           files: JSON.stringify($scope.toDownload)
         }
-     });
+      }).success(function() {
+        $scope.status = "Files successfully downloaded.";
+      }).error(function() {
+        $scope.status = "There was a problem.";
+      });
     };      
   });
         
