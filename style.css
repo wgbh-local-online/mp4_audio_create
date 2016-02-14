@@ -1,0 +1,35 @@
+body {
+  font-family: Helvetica, Arial, sans-serif
+}
+h1,h2,h3 {
+  color: darkorange;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+}
+.content {
+  width: 80%;
+  margin: 30px auto;
+}
+label { 
+  display: block;
+  margin-bottom: 10px;
+}
+input[type=checkbox] {
+  padding-right: 20px;
+}
+button, input[type=submit] {
+  padding: 10px 30px;
+  font-size: 1em;
+  background-color: #999;
+  color: white;
+  border-radius: 7px;
+  font-weight: bold;
+}
+input[type=submit].download {
+  background-color: darkorange;
+}
+button:hover, input[type=submit]:hover {
+  background-color: orange;
+  cursor: pointer;
+}
+  
+  
