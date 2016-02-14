@@ -31,7 +31,6 @@ switch ($_GET['action']) {
 
 
   case 'upload_and_convert':
-    ini_set('upload_max_filesize', '50M');
     if ($_FILES['file']['error'] > 0) {
        $filevar = print_r($_FILES, true);
        error_log("Upload files: $filevar\n", 3, "error.log");
@@ -44,7 +43,9 @@ switch ($_GET['action']) {
       $targetFile =  DL_PATH . $fileName['filename']. ".m4a" ;
 
       # Convert file to mp4 using ffmpeg
-      shell_exec("ffmpeg -i $tempFile -loglevel quiet -c:a libfdk_aac $targetFile");
+      $cmd = "ffmpeg -i $tempFile -loglevel quiet -c:a libfdk_aac $targetFile";
+      error_log("Executing: $cmd\n", 3, "error.log");
+      exec($cmd);
     }
     break;
         
