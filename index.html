@@ -34,7 +34,7 @@
     <div ng-controller="downloadsController as downloads" data-ng-init="updateFileList(true)">
       <form action="do_it.php?action=download_files" method="post" target="hidden_iframe" enctype="application/x-www-form-urlencoded">
         <label ng-repeat="item in availableFiles">
-          <input type="checkbox" name="files[]" value="{{item.filename}}" /> {{item.filename}}
+          <input type="checkbox" name="files[]" ng-model="availableDownloads" value="{{item.filename}}" /> {{item.filename}}
         </label>
         <input type="submit" class="download" value="Download" />
       </form>

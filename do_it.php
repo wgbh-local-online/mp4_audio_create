@@ -3,8 +3,8 @@
 define('DL_FOLDER', 'downloads');
 define('DL_PATH', dirname( __FILE__ ) . DIRECTORY_SEPARATOR. DL_FOLDER . DIRECTORY_SEPARATOR);
   
-if (!file_exists(DL_PATH)) {
-  exec("mkdir -p " . DL_PATH)
+if (!is_dir(DL_PATH)) {
+  exec("mkdir -p " . DL_PATH);
 } 
      
 function downloadable_files($f) {
@@ -20,7 +20,7 @@ function add_folder($f) {
 
 switch ($_GET['action']) {
   case 'get_downloadable_files':
-
+  
     if (is_dir(DL_PATH)) {
       $mp4_files = array_values(array_filter(scandir(DL_PATH), "downloadable_files"));
     }
