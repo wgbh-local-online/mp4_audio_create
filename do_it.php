@@ -51,7 +51,7 @@ switch ($_GET['action']) {
     break;
         
   case 'download_files':
-    $folder = "downloads_" . date("Ymd-Hi");
+    $folder = "mp4_audio_" . date("Ymd-Hi");
     
     $files = $_POST['files'];
 
