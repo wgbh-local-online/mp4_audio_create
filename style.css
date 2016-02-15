@@ -1,9 +1,14 @@
 body {
   font-family: Helvetica, Arial, sans-serif
 }
-h1,h2,h3 {
+h1 {
   color: darkorange;
   text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #666;
+  font-size: 1.1em;
+  margin-top: 30px;
 }
 .content {
   width: 80%;
@@ -23,6 +28,7 @@ button, input[type=submit] {
   color: white;
   border-radius: 7px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 input[type=submit].download {
   background-color: darkorange;
@@ -34,6 +40,11 @@ button.alert {
 button:hover, input[type=submit]:hover {
   background-color: orange;
   cursor: pointer;
+}
+.info {
+  font-style: italic;
+  font-size: 0.9em;
+  color: #999;
 }
 .status {
   padding: 20px;

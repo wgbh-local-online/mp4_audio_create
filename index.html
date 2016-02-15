@@ -22,7 +22,7 @@
 <body>
   <div class="content">
     <h1>mp3 to mp4 converter</h1>
-    <p>Files dropped into the box below will be converted HE-ACC in an MPEG-4 container (extension m4a).</p>
+    <p class="info">Files dropped into the box below will be converted to aac format in an mpeg-4 container (extension m4a).</p>
     <form action="do_it.php?action=upload_and_convert"
         class="dropzone"
         id="audio-dropzone">
@@ -31,6 +31,7 @@
       </div>  
     </form>
     <h2>Download</h2>
+    <p class="info">Files that are ready appear below. Check any you'd like to download and click the button; they'll be collected in a zip file.</p>
     <div ng-controller="downloadsController as downloads" data-ng-init="updateFileList(true)">
       <form action="do_it.php?action=download_files" method="post" target="hidden_iframe" enctype="application/x-www-form-urlencoded">
         <label ng-repeat="item in availableFiles">
