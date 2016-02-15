@@ -43,7 +43,7 @@ switch ($_GET['action']) {
       $targetFile =  DL_PATH . $fileName['filename']. ".m4a" ;
 
       # Convert file to mp4 using ffmpeg
-      $cmd = "/usr/local/bin/ffmpeg -i $tempFile -loglevel quiet -c:a libfdk_aac $targetFile 1>&2 &";
+      $cmd = "/usr/local/bin/ffmpeg -i $tempFile -loglevel quiet -c:a libfdk_aac $targetFile 2>&1 &";
       error_log("Executing: $cmd\n", 3, "error.log");
       $output = shell_exec($cmd);
       error_log($output . "\n", 3, "error.log");
