@@ -21,8 +21,9 @@
 </head>
 <body>
   <div class="content">
-    <h1>mp3 to mp4 converter</h1>
-    <p class="info">Files dropped into the box below will be converted to aac format in an mpeg-4 container (extension m4a).</p>
+    <h1>mp3 to m4a converter</h1>
+    <p>NPR One requires audio files in <em>aac</em> format, wrapped in an <em>mpeg-4</em> container (like <em>mp4</em> video files without the video).
+    <p class="info">Files dropped into the box below will be converted to this format (extension <em>.m4a</em>).</p>
     <form action="do_it.php?action=upload_and_convert"
         class="dropzone"
         id="audio-dropzone">
@@ -34,8 +35,8 @@
     <p class="info">Files that are ready appear below. Check any you'd like to download and click the button; they'll be collected in a zip file.</p>
     <div ng-controller="downloadsController as downloads" data-ng-init="updateFileList(true)">
       <form action="do_it.php?action=download_files" method="post" target="hidden_iframe" enctype="application/x-www-form-urlencoded">
-        <label ng-repeat="item in availableFiles">
-          <input type="checkbox" name="files[]" checklist-model="toDownload" checklist-value="item.filename" value="{{item.filename}}" /> {{item.filename}}
+        <label ng-repeat="item in availableFiles track by $index">
+          <input type="checkbox" name="files[]" checklist-model="toDownload" checklist-value="item.filename" value="item.filename" /> {{item.filename}}
         </label>
         <input type="submit" class="download" value="Download" />
       </form>

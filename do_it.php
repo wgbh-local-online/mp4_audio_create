@@ -5,35 +5,37 @@ define('DL_PATH', dirname( __FILE__ ) . DIRECTORY_SEPARATOR. DL_FOLDER . DIRECTO
   
 if (!is_dir(DL_PATH)) {
   exec("mkdir -p " . DL_PATH);
-} 
-     
-function downloadable_files($f) {
-  return preg_match("/\.(m4a|mp4|mp3)$/", $f);
-}
-
-function add_folder($f) {
-  return array( 
-    "filepath" => DL_FOLDER . DIRECTORY_SEPARATOR . $f,
-    "filename" => $f,
-  );
 }
 
 switch ($_GET['action']) {
   case 'get_downloadable_files':
   
     if (is_dir(DL_PATH)) {
-      $mp4_files = array_values(array_filter(scandir(DL_PATH), "downloadable_files"));
+      $downloadable = array();
+      $raw_files = scandir(DL_PATH);
+      foreach ($raw_files as $file) {
+        if (preg_match("/\.(m4a|mp4|mp3)$/", $file)) {
+          $file_path = DL_PATH . "/" . $file;
+          $result = `fuser $file_path`;
+          error_log("fuser result: $result\n", 3, "error.log");
+          if (is_null($result)) {
+            $downloadable[] = array('filename' => $file);
+          }
+        }
+      }
+      
     }
-    $mp4_paths = array_map("add_folder", $mp4_files); 
+    
+    error_log("Downloadable: " . json_encode($downloadable) . "\n", 3, "error.log");
 
-    echo json_encode($mp4_paths);
+    echo json_encode($downloadable);
     break;
 
 
   case 'upload_and_convert':
     if ($_FILES['file']['error'] > 0) {
        $filevar = print_r($_FILES, true);
-       error_log("Upload files: $filevar\n", 3, "error.log");
+       // error_log("Upload files: $filevar\n", 3, "error.log");
     }
 
     if (!empty($_FILES)) {
@@ -43,15 +45,16 @@ switch ($_GET['action']) {
       $targetFile =  DL_PATH . $fileName['filename']. ".m4a" ;
 
       # Convert file to mp4 using ffmpeg
-      $cmd = "/usr/local/bin/ffmpeg -i $tempFile -loglevel quiet -c:a libfdk_aac $targetFile 2>&1 &";
-      error_log("Executing: $cmd\n", 3, "error.log");
+      # Options: no output, overwrite files (-y)
+      $cmd = "/usr/local/bin/ffmpeg -i $tempFile -y -loglevel quiet -c:a libfdk_aac $targetFile 2>&1 &";
+//       error_log("Executing: $cmd\n", 3, "error.log");
       $output = shell_exec($cmd);
-      error_log($output . "\n", 3, "error.log");
+//       error_log($output . "\n", 3, "error.log");
     }
     break;
         
   case 'download_files':
-    $folder = "mp4_audio_" . date("Ymd-Hi");
+    $folder = "m4a_audio_" . date("Ymd-Hi");
     
     $files = $_POST['files'];
 
