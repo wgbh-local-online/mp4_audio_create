@@ -32,7 +32,8 @@
       </div>  
     </form>
     <h2>Download</h2>
-    <p class="info">Files that are ready appear below. Check any you'd like to download and click the button; they'll be collected in a zip file.</p>
+    <p class="info">Processing the files takes a little bit of time, depending on size.</p>
+    <p class="info">Files that are ready for download appear below; checked files will be downloaded in a zip file.</p>
     <div ng-controller="downloadsController as downloads" data-ng-init="updateFileList(true)">
       <form action="do_it.php?action=download_files" method="post" target="hidden_iframe" enctype="application/x-www-form-urlencoded">
         <label ng-repeat="item in availableFiles track by $index">
